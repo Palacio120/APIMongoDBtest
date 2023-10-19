@@ -17,7 +17,7 @@ export const register = async (req, res) => {
         const { token, expiresIn } = generateToken(user.id);
         generateRefreshToken(user.id, res);
 
-        return res.status(201).json({ ok: "true", token });
+        return res.status(201).json({ ok: "true", token, expiresIn });
     } catch (error) {
         console.log(error);
         if (error.code === 11000) {
@@ -59,24 +59,17 @@ export const infoUser = async (req, res) => {
     }
 }
 
-export const refreshToken=(req,res)=>{
+export const refreshToken = (req, res) => {
     try {
-        const refreshTokenCookie = req.cookies.refreshToken;
-        if (!refreshTokenCookie){
-            throw new Error('No Berrer')
-        }
-        const {uid} =  jwt.verify(refreshTokenCookie, process.env.JWT_REFRESH_SECRET);
-        const { token, expiresIn } = generateToken(uid);
-        return res.status(200).json({ token, expiresIn });
-
+        const { token, expiresIn } = generateToken(req.uid);
+        return res.json({ token, expiresIn });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({ error: "error de server" });
     }
+};
 
-
-}
-
-export const logout =(req,res)=>{
+export const logout = (req, res) => {
     res.clearCookie('refreshToken');
-    res.json({ok:true});
+    res.json({ ok: true });
 }
