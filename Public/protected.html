@@ -26,10 +26,10 @@
 
         document.addEventListener("DOMContentLoaded", async (e) => {
             try {
-                const resToken = await fetch('/api/v1/auth/refresh', { method: "GET", credentials: 'include' });
+                const resToken = await fetch('http://localhost:5000/api/v1/auth/refresh', { method: "GET", credentials: 'include' });
                 const { token } = await resToken.json();
 
-                const res = await fetch('/api/v1/auth/confidential', {
+                const res = await fetch('http://localhost:5000/api/v1/auth/confidential', {
                     headers: {
                         "Content-Type": "aplication/json",
                         "Authorization": "Bearer " + token,

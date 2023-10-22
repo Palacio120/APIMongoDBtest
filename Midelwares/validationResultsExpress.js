@@ -58,7 +58,7 @@ export const bodyLinkValidator = [
 ]
 
 export const paramsValidator = [
-    param('id', 'Formato de id incorrecto')
+    param('nanoLink', 'Formato de id incorrecto')
         .trim()
         .notEmpty()
         .escape(),
