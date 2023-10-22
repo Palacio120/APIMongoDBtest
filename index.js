@@ -8,10 +8,10 @@ import linkRouter from "./Routes/link.route.js";
 import redirectRouter from './Routes/redirect.route.js';
 
 const app = express();
-const whithelist=[process.env.ORIGIN1]
+const whithelist=[process.env.ORIGIN1, process.env.ORIGIN2];
 app.use(cors({
     origin:function(origin,callback){
-        if(whithelist.includes(origin)){
+        if(!origin||whithelist.includes(origin)){
             return callback(null, origin)
         }
         return callback(
